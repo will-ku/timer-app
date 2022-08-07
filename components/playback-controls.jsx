@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   MdOutlinePlayCircle,
   MdOutlinePauseCircle,
@@ -10,6 +10,8 @@ function PlaybackControls({ time, setTime }) {
   const resetTime = () => {
     setTime(0);
   };
+
+  const playTimer = () => {};
 
   return (
     <div className="flex">

@@ -1,5 +1,9 @@
 export const DEFAULT_DATA = [
   {
+    activity: 'test',
+    duration: 5
+  },
+  {
     activity: 'Freestyle Padwork',
     duration: 180
   },
