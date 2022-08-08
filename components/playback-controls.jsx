@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   MdOutlinePlayCircle,
   MdOutlinePauseCircle,
@@ -6,19 +6,43 @@ import {
   MdOutlineReplay,
 } from "react-icons/md";
 
-function PlaybackControls({ time, setTime }) {
-  const resetTime = () => {
+function PlaybackControls({
+  time,
+  setTime,
+  active,
+  setActive,
+  ticking,
+  setTicking,
+}) {
+  const handleReplay = () => {
     setTime(0);
+    setTicking(false);
   };
 
-  const playTimer = () => {};
+  const handlePlay = () => {
+    if (time < 1) return;
+    setTicking(true);
+    setActive(true);
+  };
+
+  const handlePause = () => {
+    setTicking(false);
+  };
+
+  const handleStop = () => {
+    setTime(0);
+    setTicking(false);
+  };
 
   return (
     <div className="flex">
-      <MdOutlinePlayCircle />
-      <MdOutlinePauseCircle />
-      <MdOutlineStopCircle />
-      <MdOutlineReplay onClick={resetTime} />
+      {ticking ? (
+        <MdOutlinePauseCircle onClick={handlePause} />
+      ) : (
+        <MdOutlinePlayCircle onClick={handlePlay} />
+      )}
+      <MdOutlineStopCircle onClick={handleStop} />
+      <MdOutlineReplay onClick={handleReplay} />
     </div>
   );
 }

@@ -2,47 +2,41 @@ import React, { useState, useEffect } from "react";
 import Timer from "./timer";
 import { DEFAULT_DATA } from "../utils/utility";
 import SpeedButton from "./speed-button";
-import {
-  MdOutlinePlayCircle,
-  MdOutlinePauseCircle,
-  MdOutlineStopCircle,
-  MdOutlineReplay,
-} from "react-icons/md";
+import ActivitiesView from "./activities-list";
+import PlaybackControls from "./playback-controls";
 
 export default function Spash() {
   const [time, setTime] = useState(0);
+  const [ticking, setTicking] = useState(false);
   const [active, setActive] = useState(false);
+  const [activitiesList, setActivitiesList] = useState([]);
 
   useEffect(() => {
-    console.log("time is ", time);
     let interval;
 
-    if (active) {
+    if (ticking) {
       interval = setInterval(() => setTime((time) => time - 1), 1000);
       if (time === 0) {
-        alert("timer done");
         clearInterval(interval);
-        setActive(false);
+        setTicking(false);
+        alert("Timer Done");
       }
     }
 
     return () => {
       clearInterval(interval);
     };
-  }, [active, time]);
-
-  const resetTime = () => {
-    setTime(0);
-    setActive(false);
-  };
+  }, [ticking, time]);
 
   const createSpeedButtons = (dataSet) => {
-    return dataSet.map((data) => (
+    return dataSet.map((data, index) => (
       <SpeedButton
+        key={data.activity + index}
         activity={data.activity}
         duration={data.duration}
         onClick={() => {
           setTime(time + data.duration);
+          setActivitiesList([...activitiesList, data]);
         }}
       />
     ));
@@ -52,15 +46,18 @@ export default function Spash() {
     <main className="flex-col">
       {createSpeedButtons(DEFAULT_DATA)}
       <Timer time={time} setTime={setTime} />
-      <MdOutlinePlayCircle onClick={() => setActive(true)} />
-      <MdOutlinePauseCircle />
-      <MdOutlineStopCircle
-        onClick={() => {
-          setTime(0);
-          setActive(false);
-        }}
+      <PlaybackControls
+        time={time}
+        setTime={setTime}
+        ticking={ticking}
+        setTicking={setTicking}
+        active={active}
+        setActive={setActive}
       />
-      <MdOutlineReplay onClick={resetTime} />
+      <ActivitiesView
+        activitiesList={activitiesList}
+        setActivitiesList={setActivitiesList}
+      />
     </main>
   );
 }

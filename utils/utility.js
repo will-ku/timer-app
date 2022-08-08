@@ -11,10 +11,10 @@ export const DEFAULT_DATA = [
     activity: 'Shadowbox',
     duration: 120
   },
-  {
-    activity:  'Jump Rope',
-    duration: 300
-  }
+  // {
+  //   activity:  'Jump Rope',
+  //   duration: 300
+  // }
 ]
 
 export const formatSeconds = (numSec) => {
