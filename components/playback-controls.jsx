@@ -13,6 +13,7 @@ function PlaybackControls({
   setActive,
   ticking,
   setTicking,
+  eventsList,
 }) {
   const handleReplay = () => {
     setTime(0);
