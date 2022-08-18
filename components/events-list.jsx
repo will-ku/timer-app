@@ -26,11 +26,17 @@ function EventsList({ eventsListData, setEventsListData, ticking, active }) {
 
   const renderList = () => {
     return eventsListData.map((event, index) => {
+      console.log("running this map fnc now");
       return (
         <Event
           key={index}
+          isCurrEvent={index === currEventIdx}
           activity={event.activity}
           duration={event.duration}
+          eventsListData={eventsListData}
+          ticking={ticking}
+          currEventIdx={currEventIdx}
+          setCurrEventIdx={setCurrEventIdx}
         />
       );
     });

@@ -21,7 +21,7 @@ function PlaybackControls({
   };
 
   const handlePlay = () => {
-    if (time < 1) return;
+    // if (time < 1) return;
     setTicking(true);
     setActive(true);
   };

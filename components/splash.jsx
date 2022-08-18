@@ -11,28 +11,27 @@ export default function Spash() {
   const [active, setActive] = useState(false);
   const [eventsListData, setEventsListData] = useState([]);
 
-  useEffect(() => {
-    let interval;
+  // useEffect(() => {
+  //   let interval;
 
-    if (ticking) {
-      /*
-      while (currEventIdx < eventsList.length) {
+  //   if (ticking) {
+  //     /*
+  //     while (currEventIdx < eventsList.length) {
 
-        
-      }
-      */
-      interval = setInterval(() => setTime((time) => time - 1), 1000);
-      if (time === 0) {
-        clearInterval(interval);
-        setTicking(false);
-        alert("Timer Done");
-      }
-    }
+  //     }
+  //     */
+  //     interval = setInterval(() => setTime((time) => time - 1), 1000);
+  //     if (time === 0) {
+  //       clearInterval(interval);
+  //       setTicking(false);
+  //       alert("Timer Done");
+  //     }
+  //   }
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [ticking, time]);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [ticking, time]);
 
   const createSpeedButtons = (dataSet) => {
     return dataSet.map((data, index) => (
@@ -40,6 +39,7 @@ export default function Spash() {
         key={data.activity + index}
         activity={data.activity}
         duration={data.duration}
+        disabled={!!active || !!ticking}
         onClick={() => {
           setEventsListData([
             ...eventsListData,
