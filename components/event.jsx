@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { formatSeconds } from "../utils/utility";
 
 export default function Event({
+  index,
   activity,
   duration,
-  isCurrEvent,
   ticking,
   currEventIdx,
   setCurrEventIdx,
@@ -14,7 +14,9 @@ export default function Event({
 
   useEffect(() => {
     let interval;
-    if (isCurrEvent && ticking) {
+    console.log("what is index", index);
+    console.log("what is currEventIdx", currEventIdx);
+    if (index === currEventIdx && ticking) {
       // currEventIdx is changimng but isCurrEvent remains true
       // why? the parent eventList should be re-rendering since its state is changing...
       interval = setInterval(
