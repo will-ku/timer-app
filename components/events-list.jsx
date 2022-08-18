@@ -1,18 +1,37 @@
-import React from "react";
 import { uniqueId } from "lodash";
-import { formatSeconds } from "../utils/utility";
+import React, { useState, useEffect } from "react";
+import Event from "./event";
 
-function EventsListView({ eventsList, setEventsList }) {
+function EventsList({ eventsListData, setEventsListData, ticking, active }) {
+  const [currEventIdx, setCurrEventIdx] = useState(0);
+
+  // useEffect(() => {
+  //   if (ticking) {
+  //     while (currEventIdx < eventsList.length) {
+  //       interval = setInterval(() => setTime((time) => time - 1), 1000);
+
+  //     }
+  //     // interval = setInterval(() => setTime((time) => time - 1), 1000);
+  //     if (currEventIdx === eventsList.length - 1 && time === 0) {
+  //       clearInterval(interval);
+  //       setTicking(false);
+  //       alert("Timer Done");
+  //     }
+  //   }
+
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [ticking, currEventIdx]);
+
   const renderList = () => {
-    return eventsList.map((listItem) => {
+    return eventsListData.map((event, index) => {
       return (
-        <li
-          key={uniqueId()}
-          className="p-2 mb-2 flex justify-between items-center bg-slate-200 shadow rounded-lg cursor-move"
-        >
-          <p>{listItem.activity}</p>
-          <p>{formatSeconds(listItem.duration)}</p>
-        </li>
+        <Event
+          key={index}
+          activity={event.activity}
+          duration={event.duration}
+        />
       );
     });
   };
@@ -20,4 +39,4 @@ function EventsListView({ eventsList, setEventsList }) {
   return <ul className="w-full max-w-md">{renderList()}</ul>;
 }
 
-export default EventsListView;
+export default EventsList;

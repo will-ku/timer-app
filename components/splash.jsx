@@ -2,20 +2,25 @@ import React, { useState, useEffect } from "react";
 import Timer from "./timer";
 import { DEFAULT_DATA } from "../utils/utility";
 import SpeedButton from "./speed-button";
-import EventsListView from "./events-list";
+import EventsList from "./events-list";
 import PlaybackControls from "./playback-controls";
 
 export default function Spash() {
   const [time, setTime] = useState(0);
   const [ticking, setTicking] = useState(false);
   const [active, setActive] = useState(false);
-  const [eventsList, setEventsList] = useState([]);
-  const [currentEvent, setCurrentEvent] = useState(0);
+  const [eventsListData, setEventsListData] = useState([]);
 
   useEffect(() => {
     let interval;
 
     if (ticking) {
+      /*
+      while (currEventIdx < eventsList.length) {
+
+        
+      }
+      */
       interval = setInterval(() => setTime((time) => time - 1), 1000);
       if (time === 0) {
         clearInterval(interval);
@@ -36,8 +41,10 @@ export default function Spash() {
         activity={data.activity}
         duration={data.duration}
         onClick={() => {
-          setTime(time + data.duration);
-          setEventsList([...eventsList, data]);
+          setEventsListData([
+            ...eventsListData,
+            { activity: data.activity, duration: data.duration },
+          ]);
         }}
       />
     ));
@@ -54,9 +61,15 @@ export default function Spash() {
         setTicking={setTicking}
         active={active}
         setActive={setActive}
-        eventsList={eventsList}
+        eventsListData={eventsListData}
       />
-      <EventsListView eventsList={eventsList} setEventsList={setEventsList} />
+      <EventsList
+        eventsListData={eventsListData}
+        setEventsListData={setEventsListData}
+        ticking={ticking}
+        setTicking={setTicking}
+        active={active}
+      />
     </main>
   );
 }
